@@ -1,0 +1,4 @@
+.swc/
+bin/
+dist/
+node_modules/

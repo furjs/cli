@@ -1,0 +1,33 @@
+{
+	"module": {
+		"type": "commonjs"
+	},
+	"env": {
+		"targets": {
+			"node": "16"
+		}
+	},
+	"minify": true,
+	"jsc": {
+		"minify": {
+			"compress": {
+				"unused": false
+			},
+			"mangle": {
+				"topLevel": true,
+				"keepFnNames": false,
+				"keepClassNames": false
+			}
+		},
+		"parser": {
+			"syntax": "typescript",
+			"tsx": false,
+			"decorators": true,
+			"dynamicImport": true
+		},
+		"transform": {
+			"legacyDecorator": true,
+			"decoratorMetadata": true
+		}
+	}
+}

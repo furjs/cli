@@ -1,0 +1,11 @@
+.github/
+.swc/
+art/*
+src/*
+.eslintignore
+.eslintrc
+.gitignore
+.release-it.json
+.swcrc
+tsconfig.eslint.json
+tsconfig.json
