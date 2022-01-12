@@ -1,0 +1,8 @@
+{
+	"ignore": {
+		"ora": {
+			"versions": "6.0.1",
+			"reason": "Forced ESM"
+		}
+	}
+}

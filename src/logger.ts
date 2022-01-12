@@ -1,10 +1,16 @@
-import log from 'npmlog';
-import args from './args';
+import { red, gray, blue, bold } from 'colorette';
 
-log.enableColor();
-log.enableUnicode();
-log.enableProgress();
+function _getDatePrefix(): string {
+	const now = new Date();
+	return gray(`[${now}]`);
+};
 
-log.level = (args.verbose || args.v || false) ? 'silly' : 'info';
+export default {
+	info(...args: any[]) {
+		console.log(_getDatePrefix(), bold(blue('INF')), ...args);
+	},
 
-export default log;
+	error(...args: any[]) {
+		console.log(_getDatePrefix(), bold(red('ERR')), ...args);
+	},
+};

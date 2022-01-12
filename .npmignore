@@ -5,6 +5,7 @@ src/*
 .eslintignore
 .eslintrc
 .gitignore
+.npm-upgrade.json
 .release-it.json
 .swcrc
 tsconfig.eslint.json

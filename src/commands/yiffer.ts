@@ -28,16 +28,6 @@ interface IComicData {
 	nextComic: string | null,
 };
 
-async function _getComicData(url: string): Promise<IComicData | null> {
-	try {
-		const { data } = await http.get(url);
-		return data;
-	} catch (err) {
-		log.error('yiffer', 'Error retrieving comic data', err);
-		return null;
-	}
-};
-
 export default {
 	name: 'yiffer',
 	description: 'downloads comic pages from yiffer.xyz',
@@ -49,36 +39,38 @@ export default {
 	async action(comicName: string, outputPath: string) {
 		outputPath = resolve(outputPath);
 
-		let progress = ora('Retrieving comic data').start();
+		const progress = ora('Retrieving comic data').start();
 		const comicApiUrl = urljoin(YIFFER_API_URL_BASE, comicName);
-		const comicData = await _getComicData(comicApiUrl);
+
+		try {
+			const { data: comicData } = await http.get(comicApiUrl);
+			progress.text = 'Starting download';
 	
-		if (!comicData) throw new Error('There was a problem fetching comic data');
-	
-		progress.text = 'Starting download';
-	
-		const { id, name, numberOfPages } = comicData;
-		const folderName = join(outputPath, `${id} - ${sanitize(name)}`);
-	
-		createDir(folderName);
-	
-		for (let i = 0; i < numberOfPages; i++) {
-			const count = i + 1;
-	
-			progress.text = `Downloading page ${count}...`;
-	
-			const paddedNumber = count.toString().padStart(3, '0');
-			const filename = `${paddedNumber}.jpg`;
-			const imageUrl = urljoin(YIFFER_IMAGE_URL_BASE, encodeURIComponent(name), filename);
-			const imagePath = join(folderName, filename);
-	
-			try {
-				await http.downloadFile(imageUrl, imagePath);
-			} catch (err: any) {
-				progress = progress.stopAndPersist({ symbol: '✖', text: `Unable to download page ${count}: ${err}` });
+			const { id, name, numberOfPages } = comicData;
+			const folderName = join(outputPath, `${id} - ${sanitize(name)}`);
+		
+			createDir(folderName);
+		
+			for (let i = 0; i < numberOfPages; i++) {
+				const count = i + 1;
+		
+				progress.text = `Downloading page ${count}...`;
+		
+				const paddedNumber = count.toString().padStart(3, '0');
+				const filename = `${paddedNumber}.jpg`;
+				const imageUrl = urljoin(YIFFER_IMAGE_URL_BASE, encodeURIComponent(name), filename);
+				const imagePath = join(folderName, filename);
+		
+				try {
+					await http.downloadFile(imageUrl, imagePath);
+				} catch (err: any) {
+					progress.stopAndPersist({ symbol: '✖', text: `Unable to download page ${count}: ${err}` });
+				}
 			}
-		}
-	
-		progress.succeed(`Finished downloading ${numberOfPages} pages!`);
+		
+			progress.succeed(`Finished downloading ${numberOfPages} pages!`);
+		} catch (err: any) {
+			progress.fail(err.response.data);
+		};
 	}
 } as ICommand;

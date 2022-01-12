@@ -23,11 +23,7 @@
 			"syntax": "typescript",
 			"tsx": false,
 			"decorators": true,
-			"dynamicImport": true
-		},
-		"transform": {
-			"legacyDecorator": true,
-			"decoratorMetadata": true
+			"dynamicImport": false
 		}
 	}
 }
