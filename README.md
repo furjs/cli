@@ -5,18 +5,14 @@
 				<h1>@furjs/cli</h1>
 				<p>A Node.js CLI application to interact with various furry websites</p>
 				<p>
-					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/v/@furjs/cli/"></a>
-					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/dt/@furjs/cli"></a>
+					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://img.shields.io/npm/v/@furjs/cli?color=crimson&label=%40furjs%2Fcli&logo=npm&style=flat-square"></a>
+					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://img.shields.io/npm/dt/@furjs/cli?color=crimson&logo=npm&style=flat-square"></a>
+					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://img.shields.io/librariesio/release/npm/@furjs/cli?color=crimson&logo=npm&style=flat-square"></a>
 				</p>
 				<p>
-					<a href="https://github.com/furjs/cli/commits"><img src="https://img.shields.io/github/last-commit/furjs/cli.svg?label=Updated&logo=github&style=flat-square"></a>
-					<img src="https://img.shields.io/github/repo-size/furjs/cli.svg?label=Repo%20Size&logo=github&style=flat-square">
-					<a href="https://github.com/furjs/cli/releases"><img src="https://img.shields.io/github/downloads/furjs/cli/total.svg?label=Downloads&logo=github&style=flat-square"></a>
-					<a href="https://github.com/furjs/cli/blob/main/LICENSE"><img src="https://img.shields.io/github/license/furjs/cli.svg?label=License&logo=apache&style=flat-square"></a>
-				</p>
-				<p>
-					<a href="https://github.com/furjs/cli/releases/latest"><img src="https://img.shields.io/github/release/furjs/cli.svg?label=Stable&logo=github&style=flat-square"></a>
 					<a href="https://github.com/furjs/cli/releases/latest"><img src="https://img.shields.io/github/release-date/furjs/cli.svg?label=Released&logo=github&style=flat-square"></a>
+					<a href="https://github.com/furjs/cli/releases/latest"><img src="https://img.shields.io/github/release/furjs/cli.svg?label=Stable&logo=github&style=flat-square"></a>
+					<a href="https://github.com/furjs/cli"><img src="https://img.shields.io/github/repo-size/furjs/cli.svg?label=Repo%20Size&logo=github&style=flat-square"></a>
 					<a href="https://github.com/furjs/cli/releases/latest"><img src="https://img.shields.io/github/downloads/furjs/cli/latest/total.svg?label=Downloads&logo=github&style=flat-square"></a>
 				</p>
 				<p>
