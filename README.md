@@ -37,6 +37,8 @@ npm i -g @furjs/cli
 yarn global add @furjs/cli
 ```
 
+You can now use the `fur` command.
+
 ## Supported Sites
 
 - yiffer.xyz

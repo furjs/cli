@@ -1,16 +1,9 @@
-import { red, gray, blue, bold } from 'colorette';
+import log from 'npmlog';
 
-function _getDatePrefix(): string {
-	const now = new Date();
-	return gray(`[${now}]`);
-};
+log.enableColor();
+log.enableUnicode();
+log.disableProgress();
 
-export default {
-	info(...args: any[]) {
-		console.log(_getDatePrefix(), bold(blue('INF')), ...args);
-	},
+log.heading = 'Fur.JS';
 
-	error(...args: any[]) {
-		console.log(_getDatePrefix(), bold(red('ERR')), ...args);
-	},
-};
+export default log;

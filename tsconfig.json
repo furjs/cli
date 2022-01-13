@@ -2,10 +2,8 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"paths": {
-			"#args": ["src/args.ts"],
 			"#utils": ["src/utils.ts"],
 			"#logger": ["src/logger.ts"],
-			"#tokens": ["src/tokens.ts"],
 			"#services/*": ["src/services/*.ts"],
 			"#commands/*": ["src/commands/*.ts"],
 			"#constants": ["src/constants.ts"],

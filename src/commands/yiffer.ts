@@ -1,4 +1,4 @@
-import ora from 'ora';
+import log from '#logger';
 import urljoin from 'url-join';
 import http from '#services/http';
 import { createDir} from '#utils';
@@ -38,14 +38,15 @@ export default {
 	async action(comicName: string, outputPath: string) {
 		outputPath = resolve(outputPath);
 
-		const progress = ora('Retrieving comic data').start();
+		log.info('yiffer', 'Retrieving comic data');
 		const comicApiUrl = urljoin(YIFFER_API_URL_BASE, comicName);
 
 		try {
 			const { data: comicData } = await http.get(comicApiUrl);
-			progress.text = 'Starting download';
+			
+			log.info('yiffer', 'Starting download');
 	
-			const { id, name, numberOfPages } = comicData;
+			const { id, name, numberOfPages } = <IComicData>comicData;
 			const folderName = join(outputPath, `${id} - ${sanitize(name)}`);
 		
 			createDir(folderName);
@@ -53,7 +54,7 @@ export default {
 			for (let i = 0; i < numberOfPages; i++) {
 				const count = i + 1;
 		
-				progress.text = `Downloading page ${count}...`;
+				log.info('yiffer', `Downloading page ${count}...`);
 		
 				const paddedNumber = count.toString().padStart(3, '0');
 				const filename = `${paddedNumber}.jpg`;
@@ -63,13 +64,14 @@ export default {
 				try {
 					await http.downloadFile(imageUrl, imagePath);
 				} catch (err: any) {
-					progress.stopAndPersist({ symbol: '✖', text: `Unable to download page ${count}: ${err}` });
+					log.error('yiffer', `Unable to download page ${count}`);
+					log.error('yiffer', err);
 				}
 			}
 		
-			progress.succeed(`Finished downloading ${numberOfPages} pages!`);
+			log.info('yiffer', 'Finished download operations');
 		} catch (err: any) {
-			progress.fail(err.response.data);
+			log.error('yiffer', err);
 		};
 	}
 } as ICommand;
