@@ -5,8 +5,7 @@
 				<h1>@furjs/cli</h1>
 				<p>A CLI application to interact with various furry websites</p>
 				<p>
-					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/v/@furjs/cli"></a>
-					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/types/@furjs/cli"></a>
+					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/v/@furjs/cli/"></a>
 					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/dt/@furjs/cli"></a>
 				</p>
 				<p>
@@ -29,4 +28,19 @@
 	</table>
 </p>
 
-Coming Soon!
+## Installation
+
+```sh
+npm i -g @furjs/cli
+
+# or
+
+yarn global add @furjs/cli
+```
+
+## Supported Sites
+
+- yiffer.xyz
+- e621/e926 (coming soon)
+- FurAffinity (coming soon)
+- InkBunny (coming soon)

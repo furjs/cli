@@ -1,5 +1,4 @@
 import ora from 'ora';
-import log from '#logger';
 import urljoin from 'url-join';
 import http from '#services/http';
 import { createDir} from '#utils';
