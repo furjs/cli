@@ -3,7 +3,7 @@
 		<tbody>
 			<td align="center">
 				<h1>@furjs/cli</h1>
-				<p>A CLI application to interact with various furry websites</p>
+				<p>A Node.js CLI application to interact with various furry websites</p>
 				<p>
 					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/v/@furjs/cli/"></a>
 					<a href="https://www.npmjs.com/package/@furjs/cli"><img src="https://badgen.net/npm/dt/@furjs/cli"></a>
@@ -27,6 +27,9 @@
 		</tbody>
 	</table>
 </p>
+
+## Requirements
+- [Node.js LTS + npm](https://nodejs.org/en/download/)
 
 ## Installation
 
