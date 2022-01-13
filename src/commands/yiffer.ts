@@ -33,7 +33,7 @@ export default {
 	aliases: ['xyz', 'yiff'],
 	arguments: [
 		{ name: '<comic>', description: 'name of the comic, wrap in quotes if it contains spaces' },
-		{ name: '[output]', description: 'path to create the comic directory to download pages to, defaults to the CWD', default: './' },
+		{ name: '[output]', description: 'path to create the comic directory to download pages to', default: './' },
 	],
 	async action(comicName: string, outputPath: string) {
 		outputPath = resolve(outputPath);
