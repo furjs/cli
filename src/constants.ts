@@ -1,13 +1,10 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 /**
  * File paths
  */
 export const BASE_PATH = __dirname;
 export const DATA_PATH = join(__dirname, 'data');
-
-export const YIFFER_API_URL_BASE = 'https://yiffer.xyz/api/comics/' as const;
-export const YIFFER_IMAGE_URL_BASE = 'https://static.yiffer.xyz/comics/' as const;
 
 /**
  * Enums

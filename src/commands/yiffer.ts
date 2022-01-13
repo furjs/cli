@@ -4,7 +4,6 @@ import http from '#services/http';
 import { createDir} from '#utils';
 import { join, resolve } from 'path';
 import sanitize from 'sanitize-filename';
-import { YIFFER_API_URL_BASE, YIFFER_IMAGE_URL_BASE } from '#constants';
 
 import type { ICommand } from '#interfaces/ICommand';
 
@@ -26,6 +25,9 @@ interface IComicData {
 	previousComic: string | null,
 	nextComic: string | null,
 };
+
+const YIFFER_API_URL_BASE = 'https://yiffer.xyz/api/comics/' as const;
+const YIFFER_IMAGE_URL_BASE = 'https://static.yiffer.xyz/comics/' as const;
 
 export default {
 	name: 'yiffer',
