@@ -39,6 +39,7 @@
 	"imports": {
 		"#utils": "./dist/utils.js",
 		"#logger": "./dist/logger.js",
+		"#prompts/*": "./dist/prompts/*.js",
 		"#services/*": "./dist/services/*.js",
 		"#commands/*": "./dist/commands/*.js",
 		"#constants": "./dist/constants.js",
