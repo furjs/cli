@@ -68,7 +68,7 @@
 	},
 	"devDependencies": {
 		"@swc/cli": "^0.1.55",
-		"@swc/core": "^1.2.128",
+		"@swc/core": "^1.2.129",
 		"@types/eslint": "^8.2.2",
 		"@types/glob": "^7.2.0",
 		"@types/npmlog": "^4.1.4",
