@@ -3,18 +3,12 @@
 import 'source-map-support/register';
 
 import log from '#logger';
-import { glob } from '#utils';
 import { Command } from 'commander';
+import { glob, getInstalledVersion } from '#utils';
 
 import type { ICommand } from '#interfaces/ICommand';
 
-const fur = (new Command())
-	.name('fur')
-	.version('0.1.0', '-v, --version', 'returns the current version')
-	.showHelpAfterError()
-	.showSuggestionAfterError();
-
-async function loadCommands(): Promise<void> {
+async function loadCommands(fur: Command): Promise<void> {
 	return new Promise((resolve, reject) => {
 		glob('./commands/*.js', async (err: Error | null, files: string[]) => {
 			if (err) reject(err);
@@ -24,7 +18,7 @@ async function loadCommands(): Promise<void> {
 		
 				if (imported.aliases) command.aliases(imported.aliases);
 				if (imported.arguments) imported.arguments.map(arg => command.argument(arg.name, arg.description, arg.default));
-				if (imported.options) imported.options.map(opt => command.argument(opt.name, opt.description, opt.default));
+				if (imported.options) imported.options.map(opt => command.option(opt.name, opt.description, opt.default));
 			}
 
 			resolve();
@@ -32,6 +26,26 @@ async function loadCommands(): Promise<void> {
 	});
 };
 
-loadCommands()
-	.then(async () => await fur.parseAsync(process.argv))
-	.catch((err: any) => log.error('Bootstrapper', err))
+(async () => {
+	const version = await getInstalledVersion();
+	const fur = (new Command())
+		.name('fur')
+		.version(version, '-v, --version', 'returns the current version')
+		.option('--silly', 'enables verbose logging', false)
+		.enablePositionalOptions()
+		.showHelpAfterError()
+		.showSuggestionAfterError();
+
+	fur.on('option:silly', () => log.level = 'silly');
+
+	let exitCode = 0;
+	try {
+		await loadCommands(fur);
+		await fur.parseAsync(process.argv);
+	} catch (err: any) {
+		log.error('Bootstrapper', err);
+		exitCode = 1;
+	} finally {
+		process.exit(exitCode);
+	}
+})();
