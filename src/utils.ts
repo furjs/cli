@@ -1,6 +1,7 @@
 import { Glob } from 'glob';
 import { join } from 'node:path';
-import { access, mkdir, readFile } from 'node:fs/promises';
+import prettyBytes from 'pretty-bytes';
+import { stat, access, mkdir, readFile } from 'node:fs/promises';
 
 import type { IGlob } from 'glob';
 
@@ -12,12 +13,34 @@ export async function wait(duration: number) {
 	return new Promise(resolve => setTimeout(resolve, duration));
 };
 
+/**
+ * Returns `true` if the path exists, `false` otherwise
+ * @param path Path to the file or directory
+ */
 export async function fileExists(path: string): Promise<boolean> {
 	try {
 		await access(path);
 		return true;
 	} catch (_) {
 		return false;
+	}
+};
+
+/**
+ * Gets file size of a file
+ * @param path Path to the file
+ */
+export async function getFileSize(path: string): Promise<{ 'bytes': number; 'formatted': string; }> {
+	try {
+		const stats = await stat(path);
+		const bytes = stats.size;
+		const formatted = prettyBytes(bytes);
+		return { bytes, formatted };
+	} catch (_) {
+		return {
+			bytes: 0,
+			formatted: ''
+		};
 	}
 };
 

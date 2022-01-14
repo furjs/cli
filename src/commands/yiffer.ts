@@ -1,9 +1,10 @@
 import log from '#logger';
 import urljoin from 'url-join';
 import http from '#services/http';
-import { createDir} from '#utils';
 import { join, resolve } from 'path';
+import prettyBytes from 'pretty-bytes';
 import sanitize from 'sanitize-filename';
+import { createDir, fileExists, getFileSize } from '#utils';
 
 import type { ICommand } from '#interfaces/ICommand';
 
@@ -37,41 +38,57 @@ export default {
 		{ name: '<comic>', description: 'name of the comic, wrap in quotes if it contains spaces' },
 		{ name: '[output]', description: 'path to create the comic directory to download pages to', default: './' },
 	],
-	async action(comicName: string, outputPath: string) {
+	options: [
+		{ name: '--overwrite', description: 'whether to overwrite existing comic pages when downloading' }
+	],
+	async action(comicName: string, outputPath: string, options: any) {
+		const { overwrite } = options;
 		outputPath = resolve(outputPath);
 
-		log.info('yiffer', 'Retrieving comic data');
 		const comicApiUrl = urljoin(YIFFER_API_URL_BASE, comicName);
-
 		try {
+			log.silly('yiffer', 'Retrieving comic data');
+
 			const { data: comicData } = await http.get(comicApiUrl);
 			
-			log.info('yiffer', 'Starting download');
+			log.silly('yiffer', 'Starting download');
 	
 			const { id, name, numberOfPages } = <IComicData>comicData;
 			const folderName = join(outputPath, `${id} - ${sanitize(name)}`);
 		
-			createDir(folderName);
+			await createDir(folderName);
 		
+			let downloaded = 0;
+			let totalBytes = 0;
 			for (let i = 0; i < numberOfPages; i++) {
 				const count = i + 1;
-		
-				log.info('yiffer', `Downloading page ${count}...`);
-		
 				const paddedNumber = count.toString().padStart(3, '0');
 				const filename = `${paddedNumber}.jpg`;
 				const imageUrl = urljoin(YIFFER_IMAGE_URL_BASE, encodeURIComponent(name), filename);
 				const imagePath = join(folderName, filename);
 		
 				try {
-					await http.downloadFile(imageUrl, imagePath);
+					const pageExists = await fileExists(imagePath);
+					if (!pageExists || overwrite) {
+						await http.downloadFile(imageUrl, imagePath);
+						const { bytes, formatted } = await getFileSize(imagePath);
+						downloaded++;
+						totalBytes += bytes;
+						log.info('yiffer', 'Downloaded page', count, `(${formatted})`);
+					} else {
+						log.info('yiffer', 'Skipping page', count, 'because it already exists');
+					}
 				} catch (err: any) {
-					log.error('yiffer', `Unable to download page ${count}`);
+					log.error('yiffer', 'Unable to download page', count);
 					log.error('yiffer', err);
 				}
 			}
 		
-			log.info('yiffer', 'Finished download operations');
+			if (downloaded > 0) {
+				log.info('yiffer', 'Finished downloading', downloaded, 'pages', `(${prettyBytes(totalBytes)})`);
+			} else {
+				log.info('yiffer', 'Nothing was downloaded');
+			}
 		} catch (err: any) {
 			log.error('yiffer', err);
 		};
